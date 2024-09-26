@@ -1,0 +1,5 @@
+int a=100;
+int b;
+scan(b);
+a = a - b - 10 + 20;
+print(a);

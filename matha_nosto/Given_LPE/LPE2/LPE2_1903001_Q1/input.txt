@@ -1,0 +1,6 @@
+H = 60; 
+U = 70; 
+F = H + 40 -U; 
+
+if(U > 0 && F > 0) {  print(F); }
+else { print(H); }

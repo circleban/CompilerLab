@@ -1,0 +1,5 @@
+DEF X IS INT =  IN();
+DEF Y as INT = IN() - X + 2; 
+DEF Z IS INT = 15;
+OUT(X-Y+Z);
+OUT(Z);
