@@ -47,17 +47,17 @@
      SUB_H = 264,
      END = 265,
      PLUS = 266,
-     FOR = 267,
-     TO = 268,
-     NEXT = 269,
-     THEN = 270,
-     IF = 271,
-     GT = 272,
-     PRINT = 273,
-     ID = 274,
-     ICONST = 275,
-     INT = 276,
-     SINGLE = 277
+     TO = 267,
+     NEXT = 268,
+     THEN = 269,
+     GT = 270,
+     PRINT = 271,
+     ID = 272,
+     ICONST = 273,
+     INT = 274,
+     SINGLE = 275,
+     IF = 276,
+     FOR = 277
    };
 #endif
 

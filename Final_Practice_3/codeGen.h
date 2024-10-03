@@ -7,7 +7,9 @@ enum code_ops
     STORE, 
     SCAN_INT_VALUE, 
     PRINT_INT_VALUE, 
+    PRINT_INT_CONST,
     ADD,
+    SUB,
     GT_OP,
     LT_OP,
     LTE_OP,
@@ -20,7 +22,7 @@ enum code_ops
     MULT
 };
 
-char *op_name[] = {"start", "halt", "ld_int", "ld_var", "store", "scan_int_value", "print_int_value", "add", "gt", "lt", "lte", "if_start", "else_start", "else_end", "while_label", "while_start", "while_end", "mul"};
+char *op_name[] = {"start", "halt", "ld_int", "ld_var", "store", "scan_int_value", "print_int_value", "print_int_const", "add", "sub", "gt", "lt", "lte", "if_start", "else_start", "else_end", "while_label", "while_start", "while_end", "mul"};
 
 struct instruction
 {

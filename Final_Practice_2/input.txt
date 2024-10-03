@@ -10,9 +10,10 @@ x = x + i + 1;
 
 For i = 1 To 10
     x = x + 10
+    print(i)
 Next i
 
-If x > 1 Then
+If x > 30 Then
     print(x)
 End If
 

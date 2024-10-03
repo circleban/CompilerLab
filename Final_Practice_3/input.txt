@@ -1,0 +1,4 @@
+A IS int =  10;
+B IS int = 50 - A + 5; 
+OUT(B); 
+OUT(202154);

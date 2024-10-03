@@ -15,70 +15,85 @@
     int int_val;
 }
 
-%token SEMI SCAN PRINT MINUS PLUS RP LP ASSIGN
+%token SEMI SCAN PRINT MINUS PLUS RP LP ASSIGN INT
 %token<str_val> ID
-%token<int_val> ICONST INT
+%token<int_val> ICONST 
 
 %left PLUS MINUS
 
-%type<int_val> exp type
+%type<int_val> type
 
 %start code
 
 %%
 code: {gen_code(START, -1);}  statements  {gen_code(HALT, -1);};
+
 statements: statements statement | ;
+
 statement: declaration
-            | scanf
-            | printf
-            | assignment;
+            | input
+            | assignment
+            | output
+            ;
 
-declaration: type ID SEMI
+declaration: type ID SEMI 
             {
-                insert($2, $1); // no gen_code
+                insert($2, $1);
             };
-scanf: SCAN LP ID RP SEMI
-    {
-        int addr = idcheck($3);
-        if(addr!=-1) gen_code(SCAN_INT_VALUE, addr);
-        else exit(0);
-    };
-printf: PRINT LP ID RP SEMI
-    {
-        int addr = idcheck($3);
-        if(addr!=-1) gen_code(PRINT_INT_VALUE, addr);
-        else exit(0);
-    };
-assignment: ID ASSIGN exp SEMI
-        {
-            int addr = idcheck($1);
-            if(addr!=-1){
-            gen_code(STORE, addr);
-            }
 
+type: INT {$$=INT_TYPE;} ;
+
+input: SCAN LP ID RP SEMI 
+        {
+            int addr = idcheck($3);
+            if(addr!=-1){
+                gen_code(SCAN_INT_VALUE, addr);
+            }
+            else yyerror();
         };
-exp: exp PLUS T 
+output: PRINT LP ID RP SEMI 
+        {
+            int addr = idcheck($3);
+            if(addr!=-1){
+                gen_code(PRINT_INT_VALUE, addr);
+            }
+            else yyerror();
+        };
+
+assignment: ID ASSIGN exp SEMI 
+            {
+                int addr = idcheck($1);
+                if(addr!=-1){
+                    gen_code(STORE, addr);
+                }
+                else yyerror();
+            };
+
+exp: exp PLUS T
     {
         gen_code(ADD, -1);
     }
-    | exp MINUS T
+    | exp MINUS T 
     {
         gen_code(SUB, -1);
     }
     | T 
     ;
-T: ID
+
+T: ID 
     {
         int addr = idcheck($1);
-        if(addr!=-1) gen_code(LD_VAR, addr);
-        else exit(0);
+        if(addr!=-1){
+            gen_code(LD_VAR, addr);
+        }
+        else yyerror();
     }
-   | ICONST
-   {
+    | ICONST
+    {
         gen_code(LD_INT, $1);
-   };
+    }
+    ;
 
-type: INT{$$=INT_TYPE};
 %%
 
 void yyerror ()

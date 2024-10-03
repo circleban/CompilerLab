@@ -38,17 +38,18 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     SEMI = 258,
-     SCAN = 259,
-     PRINT = 260,
-     MINUS = 261,
-     PLUS = 262,
-     RP = 263,
-     LP = 264,
-     ASSIGN = 265,
-     INT = 266,
+     ASSIGN = 258,
+     SEMI = 259,
+     LP = 260,
+     RP = 261,
+     MINUS = 262,
+     PLUS = 263,
+     IS = 264,
+     SCAN = 265,
+     PRINT = 266,
      ID = 267,
-     ICONST = 268
+     ICONST = 268,
+     INT = 269
    };
 #endif
 
@@ -67,7 +68,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 71 "parser.tab.h"
+#line 72 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

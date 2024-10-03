@@ -111,7 +111,6 @@ void print_assembly()
                             printf("\tpop eax\n");
                             break;
 
-
             case PRINT_INT_VALUE:              
                             printf("\tpush eax\n");
                             printf("\tpush ebx\n");
@@ -136,7 +135,31 @@ void print_assembly()
                             printf("\tpop ebx\n");
                             printf("\tpop eax\n");
                             break;
+                            
+            case PRINT_INT_CONST:              
+                            printf("\tpush eax\n");
+                            printf("\tpush ebx\n");
+                            printf("\tpush ecx\n");
+                            printf("\tpush edx\n");
+                            for(j=address-1; j>=0; j--)
+                                printf("\tpush [ebp-%d]\n", 4*j);
+                            for(j=1; j<=stack_variable_counter; j++)
+                                printf("\tpush [ebp+%d]\n", 4*j);
+                            printf("\tpush ebp\n");
 
+                            printf("\tmov eax, %d\n", code[i].arg);
+                            printf("\tINVOKE printf, ADDR output_integer_msg_format, eax\n");
+
+                            printf("\tpop ebp\n");
+                            for(j=stack_variable_counter; j>=1; j--)
+                                printf("\tpop [ebp+%d]\n", 4*j);
+                            for(j=0; j<=address-1; j++)
+                                printf("\tpop [ebp-%d]\n", 4*j);
+                            printf("\tpop edx\n");
+                            printf("\tpop ecx\n");
+                            printf("\tpop ebx\n");
+                            printf("\tpop eax\n");
+                            break;
             case LD_VAR: 
                             printf("\tmov eax, [ebp-%d]\n", 4*code[i].arg);
                             printf("\tmov dword ptr [ebx], eax\n");
@@ -159,6 +182,17 @@ void print_assembly()
                             printf("\tadd eax, edx\n");
                             printf("\tmov dword ptr [ebx], eax\n");
                             printf("\tadd ebx, 4\n");
+                            printf("\n");
+                            break;
+            case SUB:
+                            printf("\tsub ebx, 4\n");
+                            printf("\tmov eax, [ebx]\n");
+                            printf("\tsub ebx, 4\n");
+                            printf("\tmov edx, [ebx]\n");
+                            printf("\tsub edx, eax\n");
+                            printf("\tmov dword ptr [ebx], edx\n");
+                            printf("\tadd ebx, 4\n");
+                            printf("\tmov eax, edx\n");
                             printf("\n");
                             break;
             case GT_OP:

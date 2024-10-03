@@ -17,18 +17,10 @@ ID (_|{letter})(_|{letter}|{digit})*
 
 %%
 
-"Sub" {return(SUB_H);}
-"Dim" {return(DIM);}
-"As" {return(AS);}
-"Single" {return(SINGLE);}
-"Integer" {return(INT);}
-"For" {return(FOR);}
-"To" {return(TO);}
-"Next" {return(NEXT);}
-"If" {return(IF);}
-"Then" {return(THEN);}
-"End" {return(END);}
-"print" {return(PRINT);}
+"IS" {return(IS);}
+"int" {return(INT);}
+"IN" {return(SCAN);}
+"OUT" {return(PRINT);}
 
 {ID} { strcpy(yylval.str_val, yytext); return(ID);}
 "(" {return(LP);}
@@ -36,7 +28,7 @@ ID (_|{letter})(_|{letter}|{digit})*
 {digit}+ {yylval.int_val=atoi(yytext); return(ICONST);}
 "=" {return(ASSIGN);}
 "+" {return(PLUS);}
-">" {return(GT);}
+"-" {return(MINUS);}
 ";" {return(SEMI);}
 
 "\n"        { lineno += 1; }

@@ -25,43 +25,21 @@ main proc
 	mov ebx, ebp
 	add ebx, 4
 
-;scan_int_value 0
-	push eax
-	push ebx
-	push ecx
-	push edx
-	push [ebp-4]
-	push [ebp-0]
-	push ebp
-	INVOKE scanf, ADDR input_integer_format, ADDR number
-	pop ebp
-	pop [ebp-0]
-	pop [ebp-4]
-	mov eax, number
-	mov dword ptr [ebp-0], eax
-	pop edx
-	pop ecx
-	pop ebx
-	pop eax
+;ld_int 10
+	mov eax, 10
+	mov dword ptr [ebx], eax
+	add ebx, 4
 
-;scan_int_value 1
-	push eax
-	push ebx
-	push ecx
-	push edx
-	push [ebp-4]
-	push [ebp-0]
-	push ebp
-	INVOKE scanf, ADDR input_integer_format, ADDR number
-	pop ebp
-	pop [ebp-0]
-	pop [ebp-4]
-	mov eax, number
-	mov dword ptr [ebp-4], eax
-	pop edx
-	pop ecx
-	pop ebx
-	pop eax
+
+;store 0
+	mov eax, [ebx-4]
+	mov dword ptr [ebp-0], eax
+
+;ld_int 50
+	mov eax, 50
+	mov dword ptr [ebx], eax
+	add ebx, 4
+
 
 ;ld_var 0
 	mov eax, [ebp-0]
@@ -69,12 +47,6 @@ main proc
 	add ebx, 4
 
 
-;ld_var 1
-	mov eax, [ebp-4]
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
-
 ;sub -1
 	sub ebx, 4
 	mov eax, [ebx]
@@ -83,26 +55,11 @@ main proc
 	sub edx, eax
 	mov dword ptr [ebx], edx
 	add ebx, 4
+	mov eax, edx
 
 
-;ld_int 10
-	mov eax, 10
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
-
-;sub -1
-	sub ebx, 4
-	mov eax, [ebx]
-	sub ebx, 4
-	mov edx, [ebx]
-	sub edx, eax
-	mov dword ptr [ebx], edx
-	add ebx, 4
-
-
-;ld_int 20
-	mov eax, 20
+;ld_int 5
+	mov eax, 5
 	mov dword ptr [ebx], eax
 	add ebx, 4
 
@@ -117,10 +74,11 @@ main proc
 	add ebx, 4
 
 
-;store 0
-	mov dword ptr [ebp-0], eax
+;store 1
+	mov eax, [ebx-4]
+	mov dword ptr [ebp-4], eax
 
-;print_int_value 0
+;print_int_value 1
 	push eax
 	push ebx
 	push ecx
@@ -131,7 +89,31 @@ main proc
 	push [ebp+8]
 	push [ebp+12]
 	push ebp
-	mov eax, [ebp-0]
+	mov eax, [ebp-4]
+	INVOKE printf, ADDR output_integer_msg_format, eax
+	pop ebp
+	pop [ebp+12]
+	pop [ebp+8]
+	pop [ebp+4]
+	pop [ebp-0]
+	pop [ebp-4]
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+
+;print_int_const 202154
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push [ebp-4]
+	push [ebp-0]
+	push [ebp+4]
+	push [ebp+8]
+	push [ebp+12]
+	push ebp
+	mov eax, 202154
 	INVOKE printf, ADDR output_integer_msg_format, eax
 	pop ebp
 	pop [ebp+12]

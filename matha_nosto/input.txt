@@ -1,7 +1,6 @@
 int a;
-int b;
+int b; 
 scan(a);
 scan(b);
 a = a - b - 10 + 20;
 print(a);
-
