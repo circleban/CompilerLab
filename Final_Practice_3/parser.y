@@ -15,11 +15,11 @@
     int int_val;
 }
 
-%token ASSIGN SEMI LP RP MINUS PLUS IS SCAN PRINT
+%token ASSIGN SEMI LP RP MINUS PLUS IS SCAN PRINT DIM AS
 %token<str_val> ID 
 %token<int_val> ICONST INT 
 
-%type<int_val> type 
+%type<int_val> dtype 
 
 %start code
 
@@ -28,21 +28,47 @@ code: {gen_code(START, -1);} statements {gen_code(HALT, -1);};
 
 statements: statements statement | ;
 
-statement: declaration
+statement: input
         | output
+        | assignment
+        | declaration
         ;
 
-declaration: ID IS type ASSIGN exp SEMI
+declaration: DIM ID AS dtype 
+            {
+                insert($2, $4);
+            }
+dtype: INT {$$ = INT_TYPE; }
+
+input: SCAN LP ID RP 
         {
-            insert($1, $3);
+            int addr = idcheck($3);
+            if(addr!=-1){
+                gen_code(SCAN_INT_VALUE, addr);
+            }
+        }
+        | ID ASSIGN SCAN LP RP SEMI 
+        {
             int addr = idcheck($1);
             if(addr!=-1){
-                gen_code(STORE, addr);
+                
+                gen_code(SCAN_INT_VALUE, addr);
             }
-            else yyerror();
-        } ; 
-
-type: INT {$$=INT_TYPE;} ;
+        } ;
+assignment: ID ASSIGN exp optional_semi 
+            {
+                int addr = idcheck($1);
+                if(addr!=-1){
+                    
+                    gen_code(STORE, addr);
+                }
+                else{
+                    insert($1, INT_TYPE);
+                    addr = idcheck($1);
+                    gen_code(STORE, addr);
+                }
+            } ;
+optional_semi: SEMI | ;
 
 exp: exp PLUS T 
     {
@@ -68,10 +94,9 @@ T: ID
     {
         gen_code(LD_INT, $1);
     } 
-    | input
     ;
 
-output: PRINT LP ID RP SEMI 
+output: PRINT LP ID RP optional_semi 
     {
         int addr = idcheck($3);
         if(addr!=-1){
@@ -79,25 +104,12 @@ output: PRINT LP ID RP SEMI
         }
         else yyerror();
     }
-    | PRINT LP ICONST RP SEMI
+    | PRINT LP ICONST RP optional_semi
     {
         gen_code(PRINT_INT_CONST, $3);
     }
     
     ; 
-
-input: SCAN LP RP 
-    {
-        char* name = "__TEMP__";
-        int addr = idcheck(name);
-        if(addr==-1){
-            insert(name, INT_TYPE);
-            addr = idcheck(name);
-        }
-        gen_code(SCAN_INT_VALUE, addr);
-
-        gen_code(LD_VAR, addr);
-    };
 
 %%
 

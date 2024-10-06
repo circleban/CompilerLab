@@ -1,19 +1,25 @@
-In line no 1, Inserting A with type INT_TYPE in symbol table.
-In line no 2, Inserting B with type INT_TYPE in symbol table.
+In line no 1, Inserting i with type INT_TYPE in symbol table.
+In line no 2, Inserting j with type INT_TYPE in symbol table.
+In line no 7, ID x is not declared.
+In line no 7, Inserting x with type INT_TYPE in symbol table.
+In line no 10, ID y is not declared.
+In line no 10, Inserting y with type INT_TYPE in symbol table.
 Parsing finished!!
 ============= INTERMEDIATE CODE===============
   0: start              -1
-  1: ld_int             10
-  2: store               0
-  3: ld_int             50
-  4: ld_var              0
-  5: sub                -1
-  6: ld_int              5
-  7: add                -1
-  8: store               1
-  9: print_int_value     1
- 10: print_int_const  202154
- 11: halt               -1
+  1: scan_int_value      0
+  2: scan_int_value      1
+  3: ld_var              0
+  4: ld_var              1
+  5: add                -1
+  6: store               2
+  7: ld_var              0
+  8: ld_var              1
+  9: sub                -1
+ 10: store               3
+ 11: print_int_value     2
+ 12: print_int_const    20
+ 13: halt               -1
 ============= ASM CODE===============
 
 ;start -1
@@ -42,24 +48,86 @@ main proc
 	mov ebx, ebp
 	add ebx, 4
 
-;ld_int 10
-	mov eax, 10
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
-
-;store 0
-	mov eax, [ebx-4]
+;scan_int_value 0
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push [ebp-12]
+	push [ebp-8]
+	push [ebp-4]
+	push [ebp-0]
+	push ebp
+	INVOKE scanf, ADDR input_integer_format, ADDR number
+	pop ebp
+	pop [ebp-0]
+	pop [ebp-4]
+	pop [ebp-8]
+	pop [ebp-12]
+	mov eax, number
 	mov dword ptr [ebp-0], eax
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
 
-;ld_int 50
-	mov eax, 50
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
+;scan_int_value 1
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push [ebp-12]
+	push [ebp-8]
+	push [ebp-4]
+	push [ebp-0]
+	push ebp
+	INVOKE scanf, ADDR input_integer_format, ADDR number
+	pop ebp
+	pop [ebp-0]
+	pop [ebp-4]
+	pop [ebp-8]
+	pop [ebp-12]
+	mov eax, number
+	mov dword ptr [ebp-4], eax
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
 
 ;ld_var 0
 	mov eax, [ebp-0]
+	mov dword ptr [ebx], eax
+	add ebx, 4
+
+
+;ld_var 1
+	mov eax, [ebp-4]
+	mov dword ptr [ebx], eax
+	add ebx, 4
+
+
+;add -1
+	sub ebx, 4
+	mov eax, [ebx]
+	sub ebx, 4
+	mov edx, [ebx]
+	add eax, edx
+	mov dword ptr [ebx], eax
+	add ebx, 4
+
+
+;store 2
+	mov eax, [ebx-4]
+	mov dword ptr [ebp-8], eax
+
+;ld_var 0
+	mov eax, [ebp-0]
+	mov dword ptr [ebx], eax
+	add ebx, 4
+
+
+;ld_var 1
+	mov eax, [ebp-4]
 	mov dword ptr [ebx], eax
 	add ebx, 4
 
@@ -75,38 +143,24 @@ main proc
 	mov eax, edx
 
 
-;ld_int 5
-	mov eax, 5
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
-
-;add -1
-	sub ebx, 4
-	mov eax, [ebx]
-	sub ebx, 4
-	mov edx, [ebx]
-	add eax, edx
-	mov dword ptr [ebx], eax
-	add ebx, 4
-
-
-;store 1
+;store 3
 	mov eax, [ebx-4]
-	mov dword ptr [ebp-4], eax
+	mov dword ptr [ebp-12], eax
 
-;print_int_value 1
+;print_int_value 2
 	push eax
 	push ebx
 	push ecx
 	push edx
+	push [ebp-12]
+	push [ebp-8]
 	push [ebp-4]
 	push [ebp-0]
 	push [ebp+4]
 	push [ebp+8]
 	push [ebp+12]
 	push ebp
-	mov eax, [ebp-4]
+	mov eax, [ebp-8]
 	INVOKE printf, ADDR output_integer_msg_format, eax
 	pop ebp
 	pop [ebp+12]
@@ -114,23 +168,27 @@ main proc
 	pop [ebp+4]
 	pop [ebp-0]
 	pop [ebp-4]
+	pop [ebp-8]
+	pop [ebp-12]
 	pop edx
 	pop ecx
 	pop ebx
 	pop eax
 
-;print_int_const 202154
+;print_int_const 20
 	push eax
 	push ebx
 	push ecx
 	push edx
+	push [ebp-12]
+	push [ebp-8]
 	push [ebp-4]
 	push [ebp-0]
 	push [ebp+4]
 	push [ebp+8]
 	push [ebp+12]
 	push ebp
-	mov eax, 202154
+	mov eax, 20
 	INVOKE printf, ADDR output_integer_msg_format, eax
 	pop ebp
 	pop [ebp+12]
@@ -138,6 +196,8 @@ main proc
 	pop [ebp+4]
 	pop [ebp-0]
 	pop [ebp-4]
+	pop [ebp-8]
+	pop [ebp-12]
 	pop edx
 	pop ecx
 	pop ebx

@@ -45,8 +45,8 @@ void vm()
     do
     {
         ir = code[pc];
-        // printf("\n;%s %d\n", op_name[ir.op], ir.arg);
-        // printf( "PC = %3d IR.arg = %8d AR = %3d Top_position = %3d, Top_value = %8d\n", pc, ir.arg, ar, top, stack[top]);
+        printf("\n;%s %d\n", op_name[ir.op], ir.arg);
+        printf( "PC = %3d IR.arg = %8d AR = %3d Top_position = %3d, Top_value = %8d\n", pc, ir.arg, ar, top, stack[top]);
 
         switch(ir.op)
         {
@@ -88,6 +88,14 @@ void vm()
                             top--;
                             stack[top-1] = stack[top-1] - stack[top];            
                             break;
+            case MULT:
+                            top--;
+                            stack[top-1] = stack[top-1] * stack[top];            
+                            break;
+            case DIVS:
+                            top--;
+                            stack[top-1] = stack[top-1] / stack[top];            
+                            break;
             case INC:
                             stack[ar+ir.arg]++;
                             break;
@@ -119,12 +127,12 @@ void vm()
 
         pc = pc + 1;
 
-        // int j = 0;
-        // for(j = 0; j<10; j++)
-        // {
-        //     printf("\tstack[%d] = %d ", j, stack[j]);
-        // }
-        // printf("\n");
+        int j = 0;
+        for(j = 0; j<10; j++)
+        {
+            printf("\tstack[%d] = %d ", j, stack[j]);
+        }
+        printf("\n");
 
     }while(ir.op!=HALT);
 }

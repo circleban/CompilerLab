@@ -47,9 +47,11 @@
      IS = 264,
      SCAN = 265,
      PRINT = 266,
-     ID = 267,
-     ICONST = 268,
-     INT = 269
+     DIM = 267,
+     AS = 268,
+     ID = 269,
+     ICONST = 270,
+     INT = 271
    };
 #endif
 
@@ -68,7 +70,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 72 "parser.tab.h"
+#line 74 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

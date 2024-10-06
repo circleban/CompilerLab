@@ -9,6 +9,8 @@ enum code_ops
     PRINT_INT_VALUE, 
     ADD,
     SUB,
+    MULT,
+    DIVS,
     INC,
     GT_OP,
     LT_OP,
@@ -16,7 +18,7 @@ enum code_ops
     GOTO,
 };
 
-char *op_name[] = {"start", "halt", "ld_int", "ld_var", "store", "scan_int_value", "print_int_value", "add", "sub", "inc", "gt", "lt", "jmp_false", "goto"};
+char *op_name[] = {"start", "halt", "ld_int", "ld_var", "store", "scan_int_value", "print_int_value", "add", "sub", "mult", "div", "inc", "gt", "lt", "jmp_false", "goto"};
 
 struct instruction
 {

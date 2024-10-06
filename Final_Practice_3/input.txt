@@ -1,4 +1,11 @@
-A IS int =  10;
-B IS int = 50 - A + 5; 
-OUT(B); 
-OUT(20);
+dim i as integer
+dim j as single
+
+scan(i)
+j = scan();
+
+x = i + j;
+y = i - j
+
+print(x)
+print(20);

@@ -44,6 +44,7 @@ statement: declaration
         | for_loop
         | print
         | inc_dec 
+        | conditional
         ;
 
 declaration: INT ID SEMI
@@ -98,22 +99,32 @@ print: PRINT LP ID RP SEMI
             else yyerror();
         };
 
-loop_while: WHILE
-        {
-            $1 = (struct lbs *) newlblrec();
-            $1->for_goto = gen_label();
-        }
-        LP exp RP 
-        {
-            $1->for_jmp_false = reserve_loc();
-        }
-        LB statements RB 
-        {
-            gen_code(GOTO, $1->for_goto);
-            back_patch($1->for_jmp_false, JMP_FALSE, gen_label());
-        };
+conditional: IF {$1 = (struct lbs *) newlblrec();}
+            LP exp RP 
+            {
+                $1->for_goto = reserve_loc();
+            }
+            LB statements RB 
+            {
+                $1->for_jmp_false = reserve_loc();
+                back_patch($1->for_goto, JMP_FALSE, gen_label());
+            }
+            ELSE LB statements RB 
+            {
+                back_patch($1->for_jmp_false, GOTO, gen_label());
+            };
 
-
+loop_while: WHILE 
+            {
+                $1 = (struct lbs *) newlblrec();
+                $1->for_goto = gen_label();
+            }
+            LP exp RP {$1->for_jmp_false = reserve_loc();}
+            LB statements RB 
+            {
+                gen_code(GOTO, $1->for_goto);
+                back_patch($1->for_jmp_false, JMP_FALSE, gen_label());
+            };
 
 for_loop: FOR LP assignment 
             {
@@ -122,9 +133,7 @@ for_loop: FOR LP assignment
             }
             exp SEMI 
             {
-                
                 $1->for_jmp_false = reserve_loc();
-                printf("forfalse: %d\n", $1->for_jmp_false);
             }
             ID INCR RP LB statements RB 
             {

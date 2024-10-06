@@ -16,11 +16,12 @@ digit [0-9]
 ID (_|{letter})(_|{letter}|{digit})*
 
 %%
-
-"IS" {return(IS);}
-"int" {return(INT);}
-"IN" {return(SCAN);}
-"OUT" {return(PRINT);}
+"dim" {return(DIM);}
+"as" {return(AS);}
+"integer" {return(INT);}
+"single" {return(INT);}
+"scan" {return(SCAN);}
+"print" {return(PRINT);}
 
 {ID} { strcpy(yylval.str_val, yytext); return(ID);}
 "(" {return(LP);}

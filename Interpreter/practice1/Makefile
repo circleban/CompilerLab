@@ -1,4 +1,4 @@
-input = input.txt
+input = input3.txt
 output = output.txt
 
 main: lexer.l parser.y
